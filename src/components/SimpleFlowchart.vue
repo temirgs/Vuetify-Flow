@@ -102,7 +102,8 @@ export default {
         return {
           start: [cx, cy],
           end: [ex, ey],
-          id: link.id
+          id: link.id,
+          label: link.label
         };
       });
       if (this.draggingLink) {
