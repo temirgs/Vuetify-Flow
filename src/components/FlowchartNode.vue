@@ -21,7 +21,6 @@
     </div>
     <div class="node-port node-output" @mousedown="outputMouseDown"></div>
     <div v-show="show.delete" class="node-delete">&times;</div>
-
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -60,7 +59,6 @@
     </v-dialog>
   </div>
 </template>
-
 <script>
 export default {
   name: "FlowchartNode",
@@ -91,7 +89,7 @@ export default {
       default: "Default"
     },
     lable: {
-      type: String,
+      type: String
     },
     url: {
       type: String
@@ -170,12 +168,10 @@ export default {
   }
 };
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 $themeColor: rgb(33, 150, 243);
 $portSize: 15;
-
 .flowchart-node {
   margin: 0;
   width: 90px;

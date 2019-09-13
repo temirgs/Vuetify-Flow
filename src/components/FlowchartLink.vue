@@ -1,18 +1,25 @@
 <template>
   <g @mouseover="handleMouseOver" @mouseleave="handleMouseLeave">
     <!-- <text :transform="arrowTransform" font-size="15">true</text> -->
-    <path :d="dAttr" :style="pathStyle"></path>
+    <path :id="textId1" :d="dAttr" :style="pathStyle"></path>
     <a v-if="show.delete" @click="deleteLink">
       <text text-anchor="midlle" :transform="arrowTransform" font-size="27"
         >&times;</text
       >
     </a>
     <path
+      :id="textId1"
       v-else
       d="M -1 -1 L 0 1 L 1 -1 z"
       :style="arrowStyle"
       :transform="arrowTransform"
     ></path>
+    <!-- for label -->
+    <text x="50" y="60" style="text-anchor: start;">
+      <textPath style="text-anchor: start;" :href="textId2">{{
+        label
+      }}</textPath>
+    </text>
   </g>
 </template>
 <script>
@@ -33,14 +40,24 @@ export default {
         return [0, 0];
       }
     },
-    id: Number
+    id: Number,
+    label: String
   },
   data() {
     return {
       show: {
         delete: false
-      }
+      },
+      textId1: "",
+      textId2: ""
     };
+  },
+  created() {
+    this.textId1 = "MyPath" + this.id;
+    this.textId2 = "#MyPath" + this.id;
+    console.log(this.textId1);
+    console.log(this.textId2);
+    console.log(this.label);
   },
   methods: {
     handleMouseOver() {
@@ -78,6 +95,7 @@ export default {
         fill: "none"
       };
     },
+
     arrowStyle() {
       return {
         stroke: "F44336",

@@ -95,17 +95,20 @@ export default {
           {
             id: 1,
             from: 1, // node id the link start
-            to: 2 // node id the link end
+            to: 2, // node id the link end
+            label: "yes"
           },
           {
             id: 2,
             from: 1, // node id the link start
-            to: 3 // node id the link end
+            to: 3, // node id the link end
+            label: "no"
           },
           {
             id: 3,
             from: 1, // node id the link start
-            to: 4 // node id the link end
+            to: 4, // node id the link end
+            label: "yes"
           }
         ]
       },

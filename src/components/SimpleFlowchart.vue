@@ -27,7 +27,6 @@
     </flowchart-node>
   </div>
 </template>
-
 <script>
 import FlowchartLink from "./FlowchartLink.vue";
 import FlowchartNode from "./FlowchartNode.vue";
@@ -102,7 +101,8 @@ export default {
         return {
           start: [cx, cy],
           end: [ex, ey],
-          id: link.id
+          id: link.id,
+          label: link.label
         };
       });
       if (this.draggingLink) {
@@ -126,10 +126,9 @@ export default {
     // console.log(22222, this.rootDivOffset);
   },
   methods: {
-
     //////datanin deyisilmesi
     changeitem(item) {
-     this.scene.nodes.forEach(element => {
+      this.scene.nodes.forEach(element => {
         if (element.id == item.id) {
           element.url = item.url;
           element.lable = item.name;
@@ -220,7 +219,6 @@ export default {
           e.pageY || e.clientY + document.documentElement.scrollTop;
         let diffX = this.mouse.x - this.mouse.lastX;
         let diffY = this.mouse.y - this.mouse.lastY;
-
         this.mouse.lastX = this.mouse.x;
         this.mouse.lastY = this.mouse.y;
         this.moveSelectedNode(diffX, diffY);
@@ -229,13 +227,10 @@ export default {
         [this.mouse.x, this.mouse.y] = getMousePosition(this.$el, e);
         let diffX = this.mouse.x - this.mouse.lastX;
         let diffY = this.mouse.y - this.mouse.lastY;
-
         this.mouse.lastX = this.mouse.x;
         this.mouse.lastY = this.mouse.y;
-
         this.scene.centerX += diffX;
         this.scene.centerY += diffY;
-
         // this.hasDragged = true
       }
     },
@@ -300,7 +295,6 @@ export default {
   }
 };
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .flowchart-container {
