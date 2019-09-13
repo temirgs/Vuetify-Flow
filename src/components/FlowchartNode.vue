@@ -4,35 +4,60 @@
     :style="nodeStyle"
     @mousedown="handleMousedown"
     @mouseover="handleMouseOver"
+    v-on:dblclick="(counter += 1), funcao()"
     @mouseleave="handleMouseLeave"
-    v-bind:class="{selected: options.selected === id}"
+    v-bind:class="{ selected: options.selected === id }"
   >
     <div
       class="node-port node-input"
       @mousedown="inputMouseDown"
       @mouseup="inputMouseUp"
-    >
-    </div>
+    ></div>
     <div class="node-main">
-      <div
-        v-text="label"
-        class="node-type"
-      ></div>
-      <!-- <div v-text="label" class="node-label"></div> -->
-      <div><img
-          style="height:80px; width:70px"
-          src="http://xia.az/uploads/posts/2018-05/1526402962_1200px-muxtar_babayev.jpg"
-        /></div>
+      <div v-text="label" class="node-type"></div>
+      <div>
+        <img style="height:69px; width:90px" :src="url" />
+      </div>
     </div>
-    <div
-      class="node-port node-output"
-      @mousedown="outputMouseDown"
-    >
-    </div>
-    <div
-      v-show="show.delete"
-      class="node-delete"
-    >&times;</div>
+    <div class="node-port node-output" @mousedown="outputMouseDown"></div>
+    <div v-show="show.delete" class="node-delete">&times;</div>
+
+    <v-dialog v-model="dialog" persistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Profile</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="label"
+                  label="Flow name"
+                  type="text"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="URL"
+                  label="Image url"
+                  type="text"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn color="blue darken-1" text @click="dialog = false"
+            >Close</v-btn
+          >
+          <v-btn color="blue darken-1" text @click="SaveChange">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -65,9 +90,11 @@ export default {
       type: String,
       default: "Default"
     },
-    label: {
+    lable: {
       type: String,
-      default: "input name"
+    },
+    url: {
+      type: String
     },
     options: {
       type: Object,
@@ -82,9 +109,13 @@ export default {
   },
   data() {
     return {
+      dialog: false,
+      counter: 0,
       show: {
         delete: false
-      }
+      },
+      label: this.lable,
+      URL: this.url
     };
   },
   mounted() {},
@@ -98,9 +129,19 @@ export default {
     }
   },
   methods: {
+    SaveChange() {
+      this.dialog = false;
+      this.$emit("itemchange", {
+        url: this.URL,
+        name: this.label,
+        id: this.id
+      });
+    },
+    funcao: function() {
+      this.dialog = true;
+    },
     handleMousedown(e) {
       const target = e.target || e.srcElement;
-      // console.log(target);
       if (
         target.className.indexOf("node-input") < 0 &&
         target.className.indexOf("node-output") < 0
@@ -132,7 +173,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-$themeColor: rgb(76, 83, 184);
+$themeColor: rgb(33, 150, 243);
 $portSize: 15;
 
 .flowchart-node {
@@ -181,17 +222,16 @@ $portSize: 15;
     right: -6px;
     top: -6px;
     font-size: 12px;
-    width: 12px;
-    height: 12px;
+    width: 20px;
+    height: 20px;
     color: $themeColor;
     cursor: pointer;
-    background: white;
-    border: 1px solid $themeColor;
+    background: rgb(255, 253, 253);
+    border: 1px solid black;
     border-radius: 100px;
     text-align: center;
     &:hover {
-      background: $themeColor;
-      color: white;
+      color: rgb(33, 150, 243);
     }
   }
 }

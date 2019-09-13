@@ -1,10 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-col
-        cols="12"
-        md="4"
-      >
+      <v-col cols="12" md="4">
         <br />
         <v-text-field
           v-model="newNodeLabel"
@@ -12,28 +9,25 @@
           required
         ></v-text-field>
       </v-col>
-      <v-col
-        cols="12"
-        md="4"
-      >
+      <v-col cols="12" md="4">
         <br />
         <v-text-field
-          v-model="firstname"
-          label="First name"
+          v-model="newNodeUrl"
+          label="Image url"
           required
         ></v-text-field>
       </v-col>
-      <v-col
-        cols="12"
-        md="4"
-      >
+      <v-col cols="12" md="4">
         <br />
+        <v-btn @click="addNode" depressed small color="primary">Save</v-btn>
         <v-btn
-          @click="addNode"
+          style="margin-left:15px"
+          @click="showJson"
           depressed
           small
-          color="primary"
-        >Primary</v-btn>
+          color="blue"
+          >Show</v-btn
+        >
       </v-col>
       <v-spacer></v-spacer>
     </v-app-bar>
@@ -45,7 +39,7 @@
         @linkBreak="linkBreak"
         @linkAdded="linkAdded"
         @canvasClick="canvasClick"
-        :height="800"
+        :height="1300"
       ></simple-flowchart>
     </v-content>
   </v-app>
@@ -66,31 +60,35 @@ export default {
         nodes: [
           {
             id: 1,
-            x: -700,
+            x: -390,
             y: -69,
-            type: "Action",
-            label: "Mamed"
+            url:
+              "https://img.freepik.com/free-vector/abstract-dynamic-pattern-wallpaper-vector_53876-59131.jpg?size=338&ext=jpg",
+            lable: "Mamed"
           },
           {
             id: 2,
-            x: -357,
+            x: -390,
             y: 80,
-            type: "Script",
-            label: "Siroglan"
+            url:
+              "https://img.freepik.com/free-vector/abstract-dynamic-pattern-wallpaper-vector_53876-59131.jpg?size=338&ext=jpg",
+            lable: "Siroglan"
           },
           {
             id: 3,
             x: -557,
             y: 80,
-            type: "Rule",
-            label: "Cesaret"
+            url:
+              "https://img.freepik.com/free-vector/abstract-dynamic-pattern-wallpaper-vector_53876-59131.jpg?size=338&ext=jpg",
+            lable: "Cesaret"
           },
           {
             id: 4,
             x: -213,
             y: 80,
-            type: "Rule",
-            label: "Vaqif"
+            url:
+              "https://img.freepik.com/free-vector/abstract-dynamic-pattern-wallpaper-vector_53876-59131.jpg?size=338&ext=jpg",
+            lable: "Vaqif"
           }
         ],
         links: [
@@ -108,24 +106,22 @@ export default {
             id: 3,
             from: 1, // node id the link start
             to: 4 // node id the link end
-          },
-          {
-            id: 4,
-            from: 2, // node id the link start
-            to: 3 // node id the link end
           }
         ]
       },
       newNodeType: 0,
       newNodeLabel: "",
-      nodeCategory: ["rule", "action", "script", "decision", "fork", "join"]
+      newNodeUrl: ""
     };
   },
   methods: {
     canvasClick(e) {
-      window.console.log("canvas Click, event:", e);
+      // window.console.log("canvas Click, event:", e);
     },
-    addNode() {
+    showJson(e) {
+      window.console.log(this.scene.nodes);
+    },
+    addNode(e) {
       let maxID = Math.max(
         0,
         ...this.scene.nodes.map(link => {
@@ -136,24 +132,21 @@ export default {
         id: maxID + 1,
         x: -400,
         y: 50,
-        type: this.nodeCategory[this.newNodeType],
-        label: this.newNodeLabel ? this.newNodeLabel : `test${maxID + 1}`
+        lable: this.newNodeLabel ? this.newNodeLabel : `test${maxID + 1}`,
+        url: this.newNodeUrl
       });
     },
     nodeClick(id) {
-      window.console.log("node click", id);
+      // window.console.log("node click", id);
     },
     nodeDelete(id) {
-      window.console.log("node delete", id);
+      // window.console.log("node delete", id);
     },
     linkBreak(id) {
-      window.console.log("link break", id);
+      // window.console.log("link break", id);
     },
     linkAdded(link) {
-      window.console.log("new link added:", link);
-    },
-    showdata() {
-      window.console.log(this.scene.nodes);
+      // window.console.log("new link added:", link);
     }
   }
 };

@@ -1,25 +1,11 @@
 <template>
-  <g
-    @mouseover="handleMouseOver"
-    @mouseleave="handleMouseLeave"
-  >
-    <text
-      :transform="arrowTransform"
-      font-size="15"
-    >true</text>
-    <path
-      :d="dAttr"
-      :style="pathStyle"
-    ></path>
-    <a
-      v-if="show.delete"
-      @click="deleteLink"
-    >
-      <text
-        text-anchor="midlle"
-        :transform="arrowTransform"
-        font-size="30"
-      >&times;</text>
+  <g @mouseover="handleMouseOver" @mouseleave="handleMouseLeave">
+    <!-- <text :transform="arrowTransform" font-size="15">true</text> -->
+    <path :d="dAttr" :style="pathStyle"></path>
+    <a v-if="show.delete" @click="deleteLink">
+      <text text-anchor="midlle" :transform="arrowTransform" font-size="27"
+        >&times;</text
+      >
     </a>
     <path
       v-else
@@ -78,7 +64,7 @@ export default {
         this.end[1] - this.start[1]
       );
       const degree = (angle * 180) / Math.PI;
-      return degree < 0 ? degree + 90 : degree; //360
+      return degree < 0 ? degree + 360 : degree; //360
     },
     deleteLink() {
       this.$emit("deleteLink");
@@ -87,15 +73,15 @@ export default {
   computed: {
     pathStyle() {
       return {
-        stroke: "rgb(255, 136, 85)",
-        strokeWidth: 2.73205,
+        stroke: "607D8B",
+        strokeWidth: 4,
         fill: "none"
       };
     },
     arrowStyle() {
       return {
-        stroke: "rgb(255, 136, 85)",
-        strokeWidth: 5.73205,
+        stroke: "F44336",
+        strokeWidth: 7,
         fill: "none"
       };
     },

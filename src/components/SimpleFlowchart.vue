@@ -5,26 +5,24 @@
     @mouseup="handleUp"
     @mousedown="handleDown"
   >
-    <svg
-      width="100%"
-      :height="`${height}px`"
-    >
+    <svg width="100%" :height="`${height}px`">
       <flowchart-link
         v-bind.sync="link"
         v-for="(link, index) in lines"
         :key="`link${index}`"
         @deleteLink="linkDelete(link.id)"
-      >
-      </flowchart-link>
+      ></flowchart-link>
     </svg>
     <flowchart-node
       v-bind.sync="node"
       v-for="(node, index) in scene.nodes"
       :key="`node${index}`"
       :options="nodeOptions"
+      @click="getDialog"
       @linkingStart="linkingStart(node.id)"
       @linkingStop="linkingStop(node.id)"
       @nodeSelected="nodeSelected(node.id, $event)"
+      @itemchange="changeitem"
     >
     </flowchart-node>
   </div>
@@ -34,9 +32,8 @@
 import FlowchartLink from "./FlowchartLink.vue";
 import FlowchartNode from "./FlowchartNode.vue";
 import { getMousePosition } from "./position";
-
 export default {
-  name: "VueFlowchart",
+  dialogon: "on",
   props: {
     scene: {
       type: Object,
@@ -129,6 +126,20 @@ export default {
     // console.log(22222, this.rootDivOffset);
   },
   methods: {
+
+    //////datanin deyisilmesi
+    changeitem(item) {
+     this.scene.nodes.forEach(element => {
+        if (element.id == item.id) {
+          element.url = item.url;
+          element.lable = item.name;
+        }
+      });
+    },
+    getDialog() {
+      this.dialogon = "off";
+    },
+    ////////////////////////
     findNodeWithID(id) {
       return this.scene.nodes.find(item => {
         return id === item.id;
@@ -294,7 +305,7 @@ export default {
 <style scoped lang="scss">
 .flowchart-container {
   margin: 0;
-  background: #ddd;
+  background: rgb(123, 133, 138);
   position: relative;
   overflow: hidden;
   svg {
