@@ -7,11 +7,13 @@
   >
     <svg width="100%" :height="`${height}px`">
       <flowchart-link
+        ref="flowchart"
         v-bind.sync="link"
         v-for="(link, index) in lines"
         :key="`link${index}`"
         @deleteLink="linkDelete(link.id)"
-      ></flowchart-link>
+        @linkDblClick="linkDblClick"
+      />
     </svg>
     <flowchart-node
       v-bind.sync="node"
@@ -23,8 +25,51 @@
       @linkingStop="linkingStop(node.id)"
       @nodeSelected="nodeSelected(node.id, $event)"
       @itemchange="changeitem"
-    >
-    </flowchart-node>
+    ></flowchart-node>
+    <v-dialog v-model="linkDialog" persistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Link</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="selectedLink.start"
+                  label="Start point"
+                  type="text"
+                  disabled
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="selectedLink.lable"
+                  label="Condition"
+                  type="text"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="selectedLink.end"
+                  label="End point"
+                  type="text"
+                  disabled
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn color="blue darken-1" text @click="linkDialog = false"
+            >Close</v-btn
+          >
+          <v-btn color="blue darken-1" text @click="saveChange">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -69,7 +114,9 @@ export default {
       rootDivOffset: {
         top: 0,
         left: 0
-      }
+      },
+      linkDialog: false,
+      selectedLink: {}
     };
   },
   components: {
@@ -102,7 +149,7 @@ export default {
           start: [cx, cy],
           end: [ex, ey],
           id: link.id,
-          label: link.label
+          lable: link.lable
         };
       });
       if (this.draggingLink) {
@@ -134,6 +181,27 @@ export default {
           element.lable = item.name;
         }
       });
+    },
+    linkDblClick(link) {
+      this.selectedLink = Object.assign({}, link);
+      this.linkDialog = true;
+    },
+    saveChange() {
+      this.linkDialog = false;
+      this.lines.forEach(element => {
+        if (element.id == this.selectedLink.id) {
+          element.start = this.selectedLink.start;
+          element.end = this.selectedLink.end;
+          element.lable = this.selectedLink.lable;
+        }
+      });
+
+      this.$refs.flowchart.forEach(element => {
+        if (this.selectedLink.id === element.id) {
+          element.conditionName = this.selectedLink.lable;
+        }
+      });
+      console.log(this.lines);
     },
     getDialog() {
       this.dialogon = "off";

@@ -14,7 +14,7 @@
       @mouseup="inputMouseUp"
     ></div>
     <div class="node-main">
-      <div v-text="label" class="node-type"></div>
+      <div v-text="lable" class="node-type"></div>
       <div>
         <img style="height:69px; width:90px" :src="url" />
       </div>
@@ -31,7 +31,7 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  v-model="label"
+                  v-model="Lable"
                   label="Flow name"
                   type="text"
                   required
@@ -112,7 +112,7 @@ export default {
       show: {
         delete: false
       },
-      label: this.lable,
+      Lable: this.lable,
       URL: this.url
     };
   },
@@ -131,7 +131,7 @@ export default {
       this.dialog = false;
       this.$emit("itemchange", {
         url: this.URL,
-        name: this.label,
+        name: this.Lable,
         id: this.id
       });
     },
