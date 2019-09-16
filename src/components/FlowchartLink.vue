@@ -1,9 +1,15 @@
 <template>
-  <g @mouseover="handleMouseOver" @mouseleave="handleMouseLeave">
+  <g
+    @mouseover="handleMouseOver"
+    @mouseleave="handleMouseLeave"
+    v-on:dblclick="(counter += 1), funcao()"
+  >
     <!-- <text :transform="arrowTransform" font-size="15">true</text> -->
     <path :id="textId1" :d="dAttr" :style="pathStyle"></path>
     <a v-if="show.delete" @click="deleteLink">
-      <text text-anchor="midlle" :transform="arrowTransform" font-size="27">&times;</text>
+      <text text-anchor="midlle" :transform="arrowTransform" font-size="27"
+        >&times;</text
+      >
     </a>
     <path
       :id="textId1"
@@ -12,10 +18,11 @@
       :style="arrowStyle"
       :transform="arrowTransform"
     ></path>
-
-    <!-- for label -->
+    <!-- for lable -->
     <text x="50" y="60" style="text-anchor: start;">
-      <textPath style="text-anchor: start;" :href="textId2">{{label}}</textPath>
+      <textPath style="text-anchor: start;" :href="textId2">
+        {{ conditionName }}
+      </textPath>
     </text>
   </g>
 </template>
@@ -38,7 +45,7 @@ export default {
       }
     },
     id: Number,
-    label: String
+    lable: String
   },
   data() {
     return {
@@ -46,17 +53,26 @@ export default {
         delete: false
       },
       textId1: "",
-      textId2: ""
+      textId2: "",
+      counter: 0,
+      startPoint: this.start,
+      endPoint: this.end,
+      conditionName: this.lable
     };
   },
   created() {
     this.textId1 = "MyPath" + this.id;
     this.textId2 = "#MyPath" + this.id;
-    console.log(this.textId1);
-    console.log(this.textId2);
-    console.log(this.label);
   },
   methods: {
+    funcao() {
+      this.$emit("linkDblClick", {
+        start: this.startPoint,
+        end: this.endPoint,
+        lable: this.conditionName,
+        id: this.id
+      });
+    },
     handleMouseOver() {
       if (this.id) {
         this.show.delete = true;
@@ -87,16 +103,16 @@ export default {
   computed: {
     pathStyle() {
       return {
-        stroke: "607D8B",
+        stroke: "yellow",
         strokeWidth: 4,
         fill: "none"
       };
     },
-    
+
     arrowStyle() {
       return {
-        stroke: "F44336",
-        strokeWidth: 7,
+        stroke: "red",
+        strokeWidth: 10,
         fill: "none"
       };
     },

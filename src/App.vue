@@ -4,7 +4,7 @@
       <v-col cols="12" md="4">
         <br />
         <v-text-field
-          v-model="newNodeLabel"
+          v-model="newNodelable"
           label="Flow name"
           required
         ></v-text-field>
@@ -96,24 +96,24 @@ export default {
             id: 1,
             from: 1, // node id the link start
             to: 2, // node id the link end
-            label: "yes"
+            lable: "yes"
           },
           {
             id: 2,
             from: 1, // node id the link start
             to: 3, // node id the link end
-            label: "no"
+            lable: "no"
           },
           {
             id: 3,
             from: 1, // node id the link start
             to: 4, // node id the link end
-            label: "yes"
+            lable: "yes"
           }
         ]
       },
       newNodeType: 0,
-      newNodeLabel: "",
+      newNodelable: "",
       newNodeUrl: ""
     };
   },
@@ -135,7 +135,7 @@ export default {
         id: maxID + 1,
         x: -400,
         y: 50,
-        lable: this.newNodeLabel ? this.newNodeLabel : `test${maxID + 1}`,
+        lable: this.newNodelable ? this.newNodelable : `test${maxID + 1}`,
         url: this.newNodeUrl
       });
     },

@@ -14,14 +14,13 @@
       @mouseup="inputMouseUp"
     ></div>
     <div class="node-main">
-      <div v-text="label" class="node-type"></div>
+      <div v-text="lable" class="node-type"></div>
       <div>
         <img style="height:69px; width:90px" :src="url" />
       </div>
     </div>
     <div class="node-port node-output" @mousedown="outputMouseDown"></div>
     <div v-show="show.delete" class="node-delete">&times;</div>
-
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -32,7 +31,7 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  v-model="label"
+                  v-model="Lable"
                   label="Flow name"
                   type="text"
                   required
@@ -60,7 +59,6 @@
     </v-dialog>
   </div>
 </template>
-
 <script>
 export default {
   name: "FlowchartNode",
@@ -91,7 +89,7 @@ export default {
       default: "Default"
     },
     lable: {
-      type: String,
+      type: String
     },
     url: {
       type: String
@@ -114,7 +112,7 @@ export default {
       show: {
         delete: false
       },
-      label: this.lable,
+      Lable: this.lable,
       URL: this.url
     };
   },
@@ -133,7 +131,7 @@ export default {
       this.dialog = false;
       this.$emit("itemchange", {
         url: this.URL,
-        name: this.label,
+        name: this.Lable,
         id: this.id
       });
     },
@@ -170,12 +168,10 @@ export default {
   }
 };
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 $themeColor: rgb(33, 150, 243);
 $portSize: 15;
-
 .flowchart-node {
   margin: 0;
   width: 90px;
