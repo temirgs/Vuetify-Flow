@@ -34,14 +34,14 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12">
+              <!-- <v-col cols="12">
                 <v-text-field
                   v-model="selectedLink.start"
                   label="Start point"
                   type="text"
                   disabled
                 ></v-text-field>
-              </v-col>
+              </v-col> -->
               <v-col cols="12">
                 <v-text-field
                   v-model="selectedLink.lable"
@@ -50,14 +50,14 @@
                   required
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
+              <!-- <v-col cols="12">
                 <v-text-field
                   v-model="selectedLink.end"
                   label="End point"
                   type="text"
                   disabled
                 ></v-text-field>
-              </v-col>
+              </v-col> -->
             </v-row>
           </v-container>
         </v-card-text>
@@ -201,6 +201,7 @@ export default {
           element.conditionName = this.selectedLink.lable;
         }
       });
+      this.selectedLink = Object.assign({}, {});
       console.log(this.lines);
     },
     getDialog() {
