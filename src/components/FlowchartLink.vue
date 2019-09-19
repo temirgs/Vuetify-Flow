@@ -14,13 +14,15 @@
     <path
       :id="textId1"
       v-else
-      d="M -1 -1 L 0 1 L 1 -1 z"
+      d="M -1 -1 L 0 1 L 1 -1"
       :style="arrowStyle"
       :transform="arrowTransform"
-    ></path>
+    >
+    </path>
     <!-- for lable -->
-    <text x="50" y="60" style="text-anchor: start;">
-      <textPath style="text-anchor: start;" :href="textId2">
+    <!-- fill="red" -->
+    <text fill="black" x="60" y="60" style="text-anchor: middle;">
+      <textPath :href="textId2">
         {{ conditionName }}
       </textPath>
     </text>
@@ -112,7 +114,7 @@ export default {
     arrowStyle() {
       return {
         stroke: "red",
-        strokeWidth: 10,
+        strokeWidth: 20,
         fill: "none"
       };
     },
@@ -139,4 +141,5 @@ export default {
 g {
   cursor: pointer;
 }
+// .Rrrrr { font:30px serif; fill: rgb(22, 62, 172); }
 </style>
